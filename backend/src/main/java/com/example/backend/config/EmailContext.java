@@ -1,5 +1,6 @@
 package com.example.backend.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -12,12 +13,12 @@ import javax.mail.internet.MimeMessage;
 @Component
 public class EmailContext {
 
-    private final JavaMailSender javaMailSender;
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     private final TemplateEngine templateEngine;
 
-    public EmailContext(JavaMailSender javaMailSender, TemplateEngine templateEngine) {
-        this.javaMailSender = javaMailSender;
+    public EmailContext(TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
     }
 
@@ -32,14 +33,16 @@ public class EmailContext {
             MimeMessage mail = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mail, true);
             helper.setTo(to);
+            System.out.println(to);
             helper.setSubject(subject);
             helper.setText(text, isHtml);
             javaMailSender.send(mail);
 
         } catch (Exception e) {
-
+            System.out.println(e);
         }
     }
 }
+
 
 
