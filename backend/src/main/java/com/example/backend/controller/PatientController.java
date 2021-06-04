@@ -23,6 +23,7 @@ public class PatientController {
         return _iPatientService.getPatient(id);
     }
 
+    //update licnih podataka pacijenta sem emaila
     @PutMapping("/{id}/patient")
     public PatientResponse updatePatient(@RequestBody PatientRequest request, @PathVariable Long id) {
         return _iPatientService.updatePatient(request, id);

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -30,4 +31,7 @@ public class Medicine  {
 
     @Enumerated(EnumType.STRING)
     private MedicineType medicineType;
+
+    @ManyToMany(mappedBy = "meds")
+    private Collection<Patient> patients;
 }
