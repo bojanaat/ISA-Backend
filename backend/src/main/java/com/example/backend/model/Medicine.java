@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -42,6 +43,9 @@ public class Medicine  {
 
     private String notes;
 
-    @ManyToMany(mappedBy = "meds")
-    private Collection<Patient> patients;
+    @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Allergies> allergies;
+
+    @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PharmacyMeds> pharmacyMeds;
 }

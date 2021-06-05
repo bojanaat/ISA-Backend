@@ -12,7 +12,7 @@ insert into user_entity (id, email, password, first_name, last_name, address, ci
 (6, 'pharmacyadmin@gmail.com', '$2y$10$UFTyoDVYFFUqlb0lnKfoKe7H/EbQOqZH.ZYHf6sOYiOWSRCmpcJ5K', 'Marija','Jovanic','Maksima Gorkog','Novi Sad','Srbija','43242', false, 4);
 
 insert into patient (id, user_id, request_type) values
-(1, 3, 1);
+(1, 3, 2);
 
 insert into dermatologist (id, user_id, pharmacy_id) values
 (1, 2, 1);
@@ -35,4 +35,15 @@ insert into medicine(id, name, code, med_shape, medicine_type, ingredients, manu
 (3, 'Ibuprofen', 'BN344R', 2, 3, 'Sastav', 'Proizvodjac', true, 'G35R', 'frefcref'),
 (4, 'Eritromicin', 'NDEI2J', 0, 2, 'Sastav', 'Proizvodjac', false, 'G53R', 'frefcref'),
 (5, 'Baktrim', 'FN344F3', 3, 1, 'Sastav', 'Proizvodjac', true, 'G3R5V', 'frefcref'),
-(6, 'Penicilin', 'NHF34', 2, 1, 'Sastav', 'Proizvodjac', true, 'VGR3', 'frefcref')
+(6, 'Penicilin', 'NHF34', 2, 1, 'Sastav', 'Proizvodjac', true, 'VGR3', 'frefcref');
+
+insert into allergies (id, patient_id, medicine_id) values
+(1, 1, 2), (2, 1, 3);
+
+insert into pharmacy_meds (id, quantity, pharmacy_id, medicine_id) values
+(1, 100, 1, 1), (2, 200, 1, 2), (3, 3000, 1, 3), (4, 400, 1, 4),
+(5, 150, 2, 2), (6, 100, 2, 3), (7, 100, 3, 5), (8, 100, 3, 6);
+
+insert into medicine_reservation (id, pick_date, pharmacy_meds_id, patient_id, medicament_reservation_status) values
+(1, '2022-01-20', 7,1, 1),
+(2, '2020-02-01', 6,1, 0);

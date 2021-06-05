@@ -27,11 +27,10 @@ public class Patient {
 
     private RequestType requestType;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "alergies",
-            joinColumns = @JoinColumn(name = "patient_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "medicament_id", referencedColumnName = "id"))
-    private List<Medicine> meds;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Allergies> allergies;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MedicineReservation> medicineReservations;
 }
 

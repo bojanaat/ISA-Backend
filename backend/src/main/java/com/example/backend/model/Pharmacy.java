@@ -42,5 +42,9 @@ public class Pharmacy {
 
     @OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pharmacist> pharmacists;
+
+
+    @OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PharmacyMeds> pharmacyMeds;
 }
 
