@@ -49,17 +49,31 @@ public class PatientService implements IPatientService {
         userRequest.setCountry(request.getCountry());
         userRequest.setPhoneNumber(request.getPhoneNumber());
         userRequest.setUserType(UserType.PATIENT);
+        System.out.println("odo da kreiram usera");
+        System.out.println(userRequest.getEmail());
+
+
 
         UserResponse userResponse = _iUserService.createUser(userRequest);
+        System.out.println("Kreirao sam usera");
+
 
         User user = _iUserRepository.findOneById(userResponse.getId());
         user.setId(userResponse.getId());
 
+        System.out.println(user.getEmail());
+
+
         Patient patient = new Patient();
         patient.setUser(user);
+        System.out.println("Setovao sam pacijentu usera");
+
         patient.setRequestType(RequestType.PENDING);
 
         Patient savedPatient = _iPatientRepository.save(patient);
+
+        System.out.println("Sacuvao sam pacijenta i idem u maper");
+
 
         return mapToResponse(savedPatient);
     }
@@ -154,6 +168,7 @@ public class PatientService implements IPatientService {
     }
 
     private PatientResponse mapToResponse(Patient savedPatient) {
+        System.out.println("Usao sam u maper");
 
         PatientResponse patientResponse = new PatientResponse();
         User user = savedPatient.getUser();
@@ -165,6 +180,8 @@ public class PatientService implements IPatientService {
         patientResponse.setFirstName(user.getFirstName());
         patientResponse.setLastName(user.getLastName());
         patientResponse.setPhoneNumber(user.getPhoneNumber());
+        System.out.println(patientResponse.getEmail());
+
         return patientResponse;
     }
 }

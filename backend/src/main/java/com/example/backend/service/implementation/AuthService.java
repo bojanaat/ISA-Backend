@@ -42,6 +42,39 @@ public class AuthService implements IAuthService {
     public LoginResponse login(LoginRequest request) throws Exception {
         User user = _iUserRepository.findOneByEmail(request.getEmail());
 
+        System.out.println(user.getEmail());
+        if(user.getSystemAdmin() != null){
+            System.out.println(user.getSystemAdmin().getId());
+            System.out.println("sistemadmin");
+
+
+        }else if(user.getPatient() != null){
+            System.out.println(user.getPatient().getId());
+            System.out.println("patient");
+
+
+        }else if(user.getPharmacist() != null){
+            System.out.println(user.getPharmacist().getId());
+            System.out.println("farmaceut");
+
+
+        }else if(user.getSupplier() != null){
+            System.out.println(user.getSupplier().getId());
+            System.out.println("suplier");
+
+
+        }else if(user.getDermatologist() != null){
+            System.out.println(user.getDermatologist().getId());
+            System.out.println("dermatolog");
+
+
+        }else if(user.getPharmacyAdmin() != null){
+            System.out.println(user.getPharmacyAdmin().getId());
+            System.out.println("farmaci admin");
+
+
+        }
+        System.out.println("U loginu sam i ovog usera hocu da logujem");
         if(user == null) {
             throw new Exception("Bad credentials.");
         }
@@ -121,6 +154,15 @@ public class AuthService implements IAuthService {
     }
 
     private UserResponse mapToResponse(User user) {
+        System.out.println(user.getEmail());
+        System.out.println("ovo je moja rola");
+        System.out.println(user.getUserType().toString());
+        System.out.println("ovo sam definitivno ja dermatolog");
+        System.out.println(user.getDermatologist().getId());
+
+
+
+
         UserResponse userResponse = new UserResponse();
         userResponse.setEmail(user.getEmail());
         Long id = null;
@@ -130,6 +172,14 @@ public class AuthService implements IAuthService {
             id = user.getSystemAdmin().getId();
         }else if(user.getUserType().equals(UserType.SUPPLIER)){
             id = user.getSupplier().getId();
+        }
+        else if(user.getUserType().equals(UserType.PHARMACY_ADMIN)){
+            id = user.getPharmacyAdmin().getId();
+        }else if(user.getUserType().equals(UserType.PHARMACIST)){
+            id = user.getPharmacist().getId();
+        }
+        else if(user.getUserType().equals(UserType.DERMATOLOGIST)){
+            id = user.getDermatologist().getId();
         }
         userResponse.setId(id);
         userResponse.setAddress(user.getAddress());

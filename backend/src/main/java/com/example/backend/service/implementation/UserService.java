@@ -24,6 +24,10 @@ public class UserService implements IUserService {
     @Override
     public UserResponse createUser(UserRequest request) throws Exception {
 
+        System.out.println("usao sam u create user");
+        System.out.println(request.getEmail());
+
+
         if(!request.getPassword().equals(request.getRePassword())) {
             throw new Exception("The passwords you entered do not match.");
         }

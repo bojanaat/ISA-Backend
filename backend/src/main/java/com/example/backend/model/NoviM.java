@@ -1,36 +1,24 @@
 package com.example.backend.model;
 
-import com.example.backend.utils.MedicineType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Medicine  {
+@Entity(name= "novi")
+public class NoviM {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
     private String name;
 
-    @Column(unique = true, nullable = false)
-    private String code;
-
-    private double amount;
-
-    private MedicineType medicineType;
-
-    @ManyToMany(mappedBy = "meds")
-    private Collection<Patient> patients;
 }

@@ -25,7 +25,6 @@ public class Patient {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @Enumerated(EnumType.STRING)
     private RequestType requestType;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -20,33 +20,24 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column( nullable = false)
     private String email; //not possible to update
 
-    @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
     private String address;
 
-    @Column(nullable = false)
     private String city;
 
-    @Column(nullable = false)
     private String country;
 
-    @Column(nullable = false)
     private String phoneNumber;
 
     private boolean deleted;
 
-    @Enumerated(EnumType.STRING)
     private UserType userType;
 
     private Date firstTimeLoggedIn;
@@ -61,5 +52,11 @@ public class User {
     private Supplier supplier;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Dermatologist dermatologist;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private PharmacyAdmin pharmacyAdmin;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Pharmacist pharmacist;
 }

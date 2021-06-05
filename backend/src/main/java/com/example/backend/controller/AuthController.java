@@ -35,7 +35,7 @@ public class AuthController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/create/patients")
+    @PostMapping("/create")
     public PatientResponse createPatient(@RequestBody PatientRequest request) throws Exception {
         return _iPatientService.createPatient(request);
     }
