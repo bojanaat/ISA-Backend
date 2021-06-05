@@ -9,11 +9,11 @@ import com.example.backend.dto.response.MedicineResponse;
 import com.example.backend.dto.response.PharmacyMedsResponse;
 import com.example.backend.model.*;
 import com.example.backend.repository.*;
+import com.example.backend.service.IEmailService;
 import com.example.backend.service.IMedicineService;
 import com.example.backend.utils.MedShape;
 import com.example.backend.utils.MedicamentReservationStatus;
 import com.example.backend.utils.MedicineType;
-import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,8 +30,9 @@ public class MedicineService implements IMedicineService {
     private final IPharmacyRepository _iPharmacyRepository;
     private final PharmacyService _pharmacyService;
     private final IMedicineReservationRepository _iMedicineReservationRepository;
+    private final IEmailService _iEmailService;
 
-    public MedicineService(IMedicineRepository iMedicineRepository, IPatientRepository iPatientRepository, IAllergiesRepository iAllergiesRepository, IPharmacyMedsRepository iPharmacyMedsRepository, IPharmacyRepository iPharmacyRepository, PharmacyService pharmacyService, IMedicineReservationRepository iMedicineReservationRepository) {
+    public MedicineService(IMedicineRepository iMedicineRepository, IPatientRepository iPatientRepository, IAllergiesRepository iAllergiesRepository, IPharmacyMedsRepository iPharmacyMedsRepository, IPharmacyRepository iPharmacyRepository, PharmacyService pharmacyService, IMedicineReservationRepository iMedicineReservationRepository, IEmailService iEmailService) {
         _iMedicineRepository = iMedicineRepository;
         _iPatientRepository = iPatientRepository;
         _iAllergiesRepository = iAllergiesRepository;
@@ -39,6 +40,7 @@ public class MedicineService implements IMedicineService {
         _iPharmacyRepository = iPharmacyRepository;
         _pharmacyService = pharmacyService;
         _iMedicineReservationRepository = iMedicineReservationRepository;
+        _iEmailService = iEmailService;
     }
 
     @Override
@@ -158,8 +160,8 @@ public class MedicineService implements IMedicineService {
         medicineReservation.setPickDate(date);
         medicineReservation.setPatient(_iPatientRepository.findOneById(request.getPatientId()));
         medicineReservation.setPharmacyMeds(_iPharmacyMedsRepository.findOneById(request.getPharmacyMedId()));
-        _iMedicineReservationRepository.save(medicineReservation);
-
+        MedicineReservation savedReservation = _iMedicineReservationRepository.save(medicineReservation);
+        _iEmailService.approveMedicineReservation(savedReservation);
         return mapPharmacyMedsToResponse(pharmacyMeds);
 
     }

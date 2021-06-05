@@ -1,6 +1,7 @@
 package com.example.backend.service.implementation;
 
 import com.example.backend.config.EmailContext;
+import com.example.backend.model.MedicineReservation;
 import com.example.backend.model.Patient;
 import com.example.backend.service.IEmailService;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,15 @@ public class EmailService implements IEmailService {
         context.setVariable("name", String.format("%s %s", patient.getUser().getFirstName(), patient.getUser().getLastName()));
         context.setVariable("reason", String.format("%s", reason));
         _emailContext.send(to, subject, "deniedRegistration", context);
+    }
+
+    @Override
+    public void approveMedicineReservation(MedicineReservation savedReservation) {
+        String to = savedReservation.getPatient().getUser().getEmail();
+        String subject = "Your medicament reservation has been approved.";
+        Context context = new Context();
+        context.setVariable("name", String.format("%s %s", savedReservation.getPatient().getUser().getFirstName(), savedReservation.getPatient().getUser().getLastName()));
+        context.setVariable("reservationId", String.format("%s", savedReservation.getId()));
+        _emailContext.send(to, subject, "approvedMedicineReservation", context);
     }
 }
