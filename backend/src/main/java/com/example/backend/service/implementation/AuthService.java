@@ -154,14 +154,6 @@ public class AuthService implements IAuthService {
     }
 
     private UserResponse mapToResponse(User user) {
-        System.out.println(user.getEmail());
-        System.out.println("ovo je moja rola");
-        System.out.println(user.getUserType().toString());
-        System.out.println("ovo sam definitivno ja dermatolog");
-        System.out.println(user.getDermatologist().getId());
-
-
-
 
         UserResponse userResponse = new UserResponse();
         userResponse.setEmail(user.getEmail());

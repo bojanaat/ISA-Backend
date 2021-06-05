@@ -11,8 +11,6 @@ insert into user_entity (id, email, password, first_name, last_name, address, ci
 (5, 'systemadmin@gmail.com', '$2y$10$UFTyoDVYFFUqlb0lnKfoKe7H/EbQOqZH.ZYHf6sOYiOWSRCmpcJ5K', 'Marija','Jovanic','Maksima Gorkog','Novi Sad','Srbija','43242', false,3),
 (6, 'pharmacyadmin@gmail.com', '$2y$10$UFTyoDVYFFUqlb0lnKfoKe7H/EbQOqZH.ZYHf6sOYiOWSRCmpcJ5K', 'Marija','Jovanic','Maksima Gorkog','Novi Sad','Srbija','43242', false, 4);
 
-
-
 insert into patient (id, user_id, request_type) values
 (1, 3, 1);
 
@@ -30,3 +28,11 @@ insert into system_admin (id, user_id) values
 
 insert into supplier (id, user_id, pharmacy_id) values
 (1, 4, 1);
+
+insert into medicine(id, name, code, med_shape, medicine_type, ingredients, manufacturer, recipe, replacement_code, notes) values
+(1, 'Panklav', 'B34I2', 0, 1, 'Sastav', 'Proizvodjac', true, 'B734', 'frefcref'),
+(2, 'Brufen', 'NUH54T', 1, 0, 'Sastav', 'Proizvodjac', false, 'G4TR', 'frefcref'),
+(3, 'Ibuprofen', 'BN344R', 2, 3, 'Sastav', 'Proizvodjac', true, 'G35R', 'frefcref'),
+(4, 'Eritromicin', 'NDEI2J', 0, 2, 'Sastav', 'Proizvodjac', false, 'G53R', 'frefcref'),
+(5, 'Baktrim', 'FN344F3', 3, 1, 'Sastav', 'Proizvodjac', true, 'G3R5V', 'frefcref'),
+(6, 'Penicilin', 'NHF34', 2, 1, 'Sastav', 'Proizvodjac', true, 'VGR3', 'frefcref')

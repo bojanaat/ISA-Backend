@@ -33,10 +33,10 @@ public class DermatologistService implements IDermatologistService {
 
     @Override
     public DermatologistResponse createDermatologist(DermatologistRequest request) throws Exception {
-        Pharmacy pharmacy = _iPharmacyRepository.findOneById(request.getPharmacyId());
+      /*  Pharmacy pharmacy = _iPharmacyRepository.findOneById(request.getPharmacyId());
         if(pharmacy == null){
             throw new Exception("You haven't assigned a pharmacy to the new created dermatologist.");
-        }
+        }*/
 
         UserRequest userRequest = new UserRequest();
         userRequest.setEmail(request.getEmail());
@@ -57,7 +57,7 @@ public class DermatologistService implements IDermatologistService {
 
         Dermatologist dermatologist = new Dermatologist();
         dermatologist.setUser(user);
-        dermatologist.setPharmacy(pharmacy);
+        //dermatologist.setPharmacy(pharmacy);
 
         Dermatologist savedDermatologist = _iDermatologistRepository.save(dermatologist);
 

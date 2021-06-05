@@ -38,9 +38,9 @@ public class SupplierService implements ISupplierService {
     @Override
     public SupplierResponse createSupplier(SupplierRequest request) throws Exception {
         Pharmacy pharmacy = _iPharmacyRepository.findOneById(request.getPharmacyId());
-        if(pharmacy == null){
+       /* if(pharmacy == null){
             throw new Exception("You haven't assigned a pharmacy to the new created supplier.");
-        }
+        }*/
 
         UserRequest userRequest = new UserRequest();
         userRequest.setEmail(request.getEmail());
@@ -61,7 +61,7 @@ public class SupplierService implements ISupplierService {
 
         Supplier supplier = new Supplier();
         supplier.setUser(user);
-        supplier.setPharmacy(pharmacy);
+        //supplier.setPharmacy(pharmacy);
 
         Supplier savedSupplier = _iSupplierRepository.save(supplier);
 

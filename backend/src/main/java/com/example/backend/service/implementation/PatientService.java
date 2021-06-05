@@ -135,7 +135,12 @@ public class PatientService implements IPatientService {
 
     @Override
     public PatientResponse approveRegistrationRequest(ApprovePatientRequest request) {
+        System.out.println(request.getPatientId());
+        System.out.println("ovome hocu dapromenim status");
+
         Patient patient = _iPatientRepository.findOneById(request.getPatientId());
+        System.out.println(patient.getId());
+        System.out.println("ovog sam nasla u repozitoriju");
         patient.setRequestType(RequestType.WAITING_FOR_ACTIVATION);
         Patient savedPatient = _iPatientRepository.save(patient);
 
