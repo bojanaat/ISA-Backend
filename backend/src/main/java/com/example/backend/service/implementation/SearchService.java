@@ -1,13 +1,12 @@
 package com.example.backend.service.implementation;
 
-import com.example.backend.dto.response.MedicineResponse;
-import com.example.backend.dto.response.PharmacyMedsResponse;
-import com.example.backend.dto.response.SearchMedicinesResponse;
-import com.example.backend.dto.response.SearchPharmacyMedsResponse;
+import com.example.backend.dto.response.*;
 import com.example.backend.model.Medicine;
+import com.example.backend.model.Pharmacy;
 import com.example.backend.model.PharmacyMeds;
 import com.example.backend.repository.IMedicineRepository;
 import com.example.backend.repository.IPharmacyMedsRepository;
+import com.example.backend.repository.IPharmacyRepository;
 import com.example.backend.service.ISearchService;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +19,17 @@ public class SearchService implements ISearchService {
 
     private final IMedicineRepository _iMedicineRepository;
     private final IPharmacyMedsRepository _iPharmacyMedsRepository;
+    private final IPharmacyRepository _iPharmacyRepository;
     
     private final MedicineService _iMedicineService;
+    private final PharmacyService _pharmacyService;
 
-    public SearchService(IMedicineRepository iMedicineRepository, IPharmacyMedsRepository iPharmacyMedsRepository, MedicineService iMedicineService) {
+    public SearchService(IMedicineRepository iMedicineRepository, IPharmacyMedsRepository iPharmacyMedsRepository, IPharmacyRepository iPharmacyRepository, MedicineService iMedicineService, PharmacyService pharmacyService) {
         _iMedicineRepository = iMedicineRepository;
         _iPharmacyMedsRepository = iPharmacyMedsRepository;
+        _iPharmacyRepository = iPharmacyRepository;
         _iMedicineService = iMedicineService;
+        _pharmacyService = pharmacyService;
     }
 
     @Override
@@ -47,6 +50,44 @@ public class SearchService implements ISearchService {
             pharmacyMedsResponses.add(_iMedicineService.mapPharmacyMedsToResponse(med));
         }
         return mapPharmacyMedsToSearchResponse(pharmacyMedsResponses);
+    }
+
+    @Override
+    public SearchPharmaciesResponse searchPharmacies(String name, String city) {
+        List<Pharmacy> pharmacies = filteredPharmacies(name, city);
+        List<PharmacyResponse> pharmacyResponses = new ArrayList<>();
+        for(Pharmacy ph: pharmacies){
+            pharmacyResponses.add(_pharmacyService.mapToResponse(ph));
+        }
+        return mapPharmaciesToResponse(pharmacyResponses);
+    }
+
+    private SearchPharmaciesResponse mapPharmaciesToResponse(List<PharmacyResponse> pharmacyResponses) {
+        SearchPharmaciesResponse searchResponse = new SearchPharmaciesResponse();
+        searchResponse.setPharmacyResponses(pharmacyResponses);
+        return searchResponse;
+    }
+
+    private List<Pharmacy> filteredPharmacies(String name, String city) {
+        List<Pharmacy> allPharmacies = _iPharmacyRepository.findAll();
+
+        return allPharmacies
+                .stream()
+                .filter(pharmacy -> {
+                    if(name != "") {
+                        return pharmacy.getName().equals(name);
+                    } else {
+                        return true;
+                    }
+                })
+                .filter(pharmacy -> {
+                    if(city != ""){
+                        return pharmacy.getAddress().equals(city);
+                    } else {
+                        return true;
+                    }
+                })
+                .collect(Collectors.toList());
     }
 
     private SearchPharmacyMedsResponse mapPharmacyMedsToSearchResponse(List<PharmacyMedsResponse> pharmacyMedsResponses) {

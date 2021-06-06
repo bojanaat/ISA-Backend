@@ -80,3 +80,26 @@ insert into loyalty_program(id, loyalty_type, patient_id)values
 
 insert into loyalty_point(id, loyalty_program_id, medicine_reservation_id) values
 (1, 1, 1), (2, 1, 2);
+
+insert into shift_dermatologist(id, start_shift, end_shift, pharmacy_id, dermatologist_id) values
+(1, '08:00', '14:00', 1, 1),
+(2, '15:00', '20:00', 2, 1);
+
+insert into shift_pharmacist(id, start_shift, end_shift, pharmacy_id, pharmacist_id) values
+(1, '08:00', '12:00', 1, 1);
+
+insert into examination_dermatologist(id, start_time_examination, end_time_examination,date_examination, price, dermatologist_id,pharmacy_id, examination_status, patient_id ) values
+(1, '08:00', '09:00', '2021-01-20', '10', 1, 1, 0, null),
+(2, '10:00', '11:00', '2021-01-20', '10', 1, 1, 1, 1),
+(3, '16:00', '17:00', '2021-01-20', '15', 1, 2, 2, 1),
+(4, '18:00', '19:00', '2021-01-20', '15', 1, 2, 2, 1);
+
+insert into rating(id,patient_id, grade, pharmacy_id, dermatologist_id, pharmacist_id, medicament_id) values
+(1, 1, 1, 1, null, 1, null),
+(2, 1, 5, 2, null, null, null),
+(3, 1, 2, 1, 1, null, null);
+
+insert into examination_pharmacist(id, start_time_examination, end_time_examination, date_examination, shift_pharmacist_id, patient_id, examination_status, price)values
+(1, '08:00', '09:00','2021-03-10', 1,1,1, 43),
+(2, '11:00', '12:00','2021-03-11',  1,1,0, 22),
+(3,  '09:00', '10:00','2021-03-12', 1,1, 2, 32);

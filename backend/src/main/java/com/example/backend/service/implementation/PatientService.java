@@ -1,9 +1,6 @@
 package com.example.backend.service.implementation;
 
-import com.example.backend.dto.request.ApprovePatientRequest;
-import com.example.backend.dto.request.DenyPatientRequest;
-import com.example.backend.dto.request.PatientRequest;
-import com.example.backend.dto.request.UserRequest;
+import com.example.backend.dto.request.*;
 import com.example.backend.dto.response.PatientResponse;
 import com.example.backend.dto.response.UserResponse;
 import com.example.backend.model.Patient;
@@ -15,6 +12,7 @@ import com.example.backend.service.IPatientService;
 import com.example.backend.service.IUserService;
 import com.example.backend.utils.RequestType;
 import com.example.backend.utils.UserType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -27,12 +25,14 @@ public class PatientService implements IPatientService {
     private final IUserRepository _iUserRepository;
     private final IUserService _iUserService;
     private final IEmailService _iEmailService;
+    private final PasswordEncoder _passwordEncoder;
 
-    public PatientService(IPatientRepository iPatientRepository, IUserRepository iUserRepository, IUserService iUserService, IEmailService iEmailService) {
+    public PatientService(IPatientRepository iPatientRepository, IUserRepository iUserRepository, IUserService iUserService, IEmailService iEmailService, PasswordEncoder passwordEncoder) {
         _iPatientRepository = iPatientRepository;
         _iUserRepository = iUserRepository;
         _iUserService = iUserService;
         _iEmailService = iEmailService;
+        _passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -170,6 +170,21 @@ public class PatientService implements IPatientService {
             return mapToResponse(savedPatient);
         }
         throw new Exception("Your account has been deleted.");
+    }
+
+    @Override
+    public void changePasswordPatient(Long id, ChangePasswordRequest request) {
+        Patient patient = _iPatientRepository.findOneById(id);
+        User user = patient.getUser();
+        if(_passwordEncoder.matches(request.getPass(), user.getPassword())){
+            if(request.getRePass().equals(request.getNewPass())){
+                user.setPassword(_passwordEncoder.encode(request.getNewPass()));
+                Patient savedPatient = _iPatientRepository.save(patient);
+                user.setPatient(savedPatient);
+                _iUserRepository.save(user);
+
+            }
+        }
     }
 
     public PatientResponse mapToResponse(Patient savedPatient) {

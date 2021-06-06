@@ -2,6 +2,7 @@ package com.example.backend.service.implementation;
 
 import com.example.backend.config.EmailContext;
 import com.example.backend.dto.request.AnswerOnComplaintRequest;
+import com.example.backend.model.ExaminationDermatologist;
 import com.example.backend.model.MedicineReservation;
 import com.example.backend.model.Patient;
 import com.example.backend.repository.IPatientRepository;
@@ -57,5 +58,14 @@ public class EmailService implements IEmailService {
         context.setVariable("name", String.format("%s %s", patient.getUser().getFirstName(), patient.getUser().getLastName()));
         context.setVariable("text", String.format("%s", request.getText()));
         _emailContext.send(to, subject, "answeringOnComplaint", context);
+    }
+
+    public void approveDermatologistExaminationReservation(ExaminationDermatologist savedReservation) {
+        String to = savedReservation.getPatient().getUser().getEmail();
+        System.out.println(to);
+        String subject = "Your dermatologist examination reservation has been approved.";
+        Context context = new Context();
+        context.setVariable("name", String.format("%s %s", savedReservation.getPatient().getUser().getFirstName(), savedReservation.getPatient().getUser().getLastName()));
+        _emailContext.send(to, subject, "approveDermatologistExaminationReservation", context);
     }
 }

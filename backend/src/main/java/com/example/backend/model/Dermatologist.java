@@ -35,4 +35,8 @@ public class Dermatologist {
     @OneToMany(mappedBy = "dermatologist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Complaint> complaints;
 
+    @OneToMany(mappedBy = "dermatologist", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ShiftDermatologist> dermatologists;
+
+
 }

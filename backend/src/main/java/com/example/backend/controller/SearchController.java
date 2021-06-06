@@ -23,6 +23,11 @@ public class SearchController {
         return new ResponseEntity<>(iSearchService.searchMedicines(name), HttpStatus.OK);
     }
 
+    @GetMapping("/pharmacies")
+    public ResponseEntity<?> searchPharmacies(@RequestParam("name") String name, @RequestParam("city") String city){
+        return new ResponseEntity<>(iSearchService.searchPharmacies(name, city), HttpStatus.OK);
+    }
+
     @GetMapping("/pharmacy-meds")
     public ResponseEntity<?> searchPharmacyMedicines(@RequestParam("name") String name, @RequestParam("pharmacyId") Long pharmacyId){
         return new ResponseEntity<>(iSearchService.searchPharmacyMedicines(name, pharmacyId), HttpStatus.OK);

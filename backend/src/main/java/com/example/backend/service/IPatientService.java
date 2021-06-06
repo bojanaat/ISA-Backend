@@ -1,6 +1,7 @@
 package com.example.backend.service;
 
 import com.example.backend.dto.request.ApprovePatientRequest;
+import com.example.backend.dto.request.ChangePasswordRequest;
 import com.example.backend.dto.request.DenyPatientRequest;
 import com.example.backend.dto.request.PatientRequest;
 import com.example.backend.dto.response.PatientResponse;
@@ -25,4 +26,6 @@ public interface IPatientService {
     void denyRegistrationRequest(Long patientId, DenyPatientRequest request);
 
     PatientResponse activateRegistration(ApprovePatientRequest request) throws Exception;
+
+    void changePasswordPatient(Long id, ChangePasswordRequest request);
 }

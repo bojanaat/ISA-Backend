@@ -30,6 +30,9 @@ public class Pharmacist {
     private List<Rating> ratings;
 
     @OneToMany(mappedBy = "pharmacist", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ShiftPharmacist> shiftPharmacists;
+
+    @OneToMany(mappedBy = "pharmacist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Complaint> complaints;
 
 }

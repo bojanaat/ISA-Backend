@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import com.example.backend.dto.request.ChangePasswordRequest;
 import com.example.backend.dto.request.SupplierRequest;
 import com.example.backend.dto.response.SupplierResponse;
 import com.example.backend.service.ISupplierService;
@@ -35,5 +36,11 @@ public class SupplierController {
     @GetMapping
     public Set<SupplierResponse> getAllSuppliers() throws Exception {
         return _iSupplierService.getAllSuppliers();
+    }
+
+    @PutMapping("/{id}/password/supplier")
+    public void changePasswordSupplier(@PathVariable("id")Long id, @RequestBody ChangePasswordRequest request){
+        _iSupplierService.changePasswordSupplier(id, request);
+
     }
 }

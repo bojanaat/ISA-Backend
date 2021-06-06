@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.request.ApprovePatientRequest;
+import com.example.backend.dto.request.ChangePasswordRequest;
 import com.example.backend.dto.request.DenyPatientRequest;
 import com.example.backend.dto.request.PatientRequest;
 import com.example.backend.dto.response.PatientResponse;
@@ -57,5 +58,11 @@ public class PatientController {
     @PutMapping("/activate")
     public PatientResponse activateRegistration(@RequestBody ApprovePatientRequest request) throws Exception {
         return _iPatientService.activateRegistration(request);
+    }
+
+    @PutMapping("/{id}/password/patient")
+    public void changePasswordPatient(@PathVariable("id")Long id, @RequestBody ChangePasswordRequest request){
+        _iPatientService.changePasswordPatient(id, request);
+
     }
 }

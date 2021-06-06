@@ -38,6 +38,12 @@ public class Pharmacy {
     private List<Supplier> pharmacySuppliers = new ArrayList<>();
 
     @OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ShiftPharmacist> shiftPharmacists = new ArrayList<>();
+
+    @OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ShiftDermatologist> shiftDermatologists = new ArrayList<>();
+
+    @OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Dermatologist> pharmacyDermatologists = new ArrayList<>();
 
     @OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)

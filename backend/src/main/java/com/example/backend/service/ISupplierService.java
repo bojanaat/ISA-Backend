@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.dto.request.ChangePasswordRequest;
 import com.example.backend.dto.request.SupplierRequest;
 import com.example.backend.dto.response.SupplierResponse;
 
@@ -15,4 +16,6 @@ public interface ISupplierService {
     void deleteSupplier(Long id);
 
     Set<SupplierResponse> getAllSuppliers() throws Exception;
+
+    void changePasswordSupplier(Long id, ChangePasswordRequest request);
 }

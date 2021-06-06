@@ -1,9 +1,11 @@
 package com.example.backend.service.implementation;
 
+import com.example.backend.dto.request.ChangePasswordRequest;
 import com.example.backend.dto.request.SupplierRequest;
 import com.example.backend.dto.request.UserRequest;
 import com.example.backend.dto.response.SupplierResponse;
 import com.example.backend.dto.response.UserResponse;
+import com.example.backend.model.Patient;
 import com.example.backend.model.Pharmacy;
 import com.example.backend.model.Supplier;
 import com.example.backend.model.User;
@@ -13,6 +15,7 @@ import com.example.backend.repository.IUserRepository;
 import com.example.backend.service.ISupplierService;
 import com.example.backend.service.IUserService;
 import com.example.backend.utils.UserType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -25,13 +28,15 @@ public class SupplierService implements ISupplierService {
     private final ISupplierRepository _iSupplierRepository;
     private final IUserRepository _iUserRepository;
     private final IPharmacyRepository _iPharmacyRepository;
+    private final PasswordEncoder _passwordEncoder;
 
     private final IUserService _iUserService;
 
-    public SupplierService(ISupplierRepository iSupplierRepository, IUserRepository iUserRepository, IPharmacyRepository iPharmacyRepository, IUserService iUserService) {
+    public SupplierService(ISupplierRepository iSupplierRepository, IUserRepository iUserRepository, IPharmacyRepository iPharmacyRepository, PasswordEncoder passwordEncoder, IUserService iUserService) {
         _iSupplierRepository = iSupplierRepository;
         _iUserRepository = iUserRepository;
         _iPharmacyRepository = iPharmacyRepository;
+        _passwordEncoder = passwordEncoder;
         _iUserService = iUserService;
     }
     
@@ -123,5 +128,19 @@ public class SupplierService implements ISupplierService {
 
         return suppliers.stream().map(supplier -> mapToResponse(supplier))
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public void changePasswordSupplier(Long id, ChangePasswordRequest request) {
+        Supplier supplier = _iSupplierRepository.findOneById(id);
+        User user = supplier.getUser();
+        if(_passwordEncoder.matches(request.getPass(), user.getPassword())){
+            if(request.getRePass().equals(request.getNewPass())){
+                user.setPassword(_passwordEncoder.encode(request.getNewPass()));
+                Supplier savedSupplier = _iSupplierRepository.save(supplier);
+                user.setSupplier(savedSupplier);
+                _iUserRepository.save(user);
+            }
+        }
     }
 }
