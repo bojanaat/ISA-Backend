@@ -67,7 +67,7 @@ public class PharmacistService implements IPharmacistService {
         return mapToResponse(savedPharmacist);
     }
 
-    private PharmacistResponse mapToResponse(Pharmacist savedPharmacist) {
+    public PharmacistResponse mapToResponse(Pharmacist savedPharmacist) {
 
         PharmacistResponse pharmacistResponse = new PharmacistResponse();
         User user = savedPharmacist.getUser();

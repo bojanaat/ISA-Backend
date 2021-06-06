@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IDermatologistRepository extends JpaRepository<Dermatologist, Long> {
+    Dermatologist findOneById(Long dermatologistId);
 }

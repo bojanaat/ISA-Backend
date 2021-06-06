@@ -29,4 +29,7 @@ public class Pharmacist {
     @OneToMany(mappedBy = "pharmacist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rating> ratings;
 
+    @OneToMany(mappedBy = "pharmacist", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Complaint> complaints;
+
 }

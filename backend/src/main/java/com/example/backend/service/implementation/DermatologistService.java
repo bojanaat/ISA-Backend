@@ -64,7 +64,7 @@ public class DermatologistService implements IDermatologistService {
         return mapToResponse(savedDermatologist);
     }
 
-    private DermatologistResponse mapToResponse(Dermatologist savedDermatologist) {
+    public DermatologistResponse mapToResponse(Dermatologist savedDermatologist) {
 
         DermatologistResponse dermatologistResponse = new DermatologistResponse();
         User user = savedDermatologist.getUser();

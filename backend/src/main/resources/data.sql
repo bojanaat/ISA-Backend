@@ -40,15 +40,15 @@ insert into medicine(id, name, code, med_shape, medicine_type, ingredients, manu
 insert into allergies (id, patient_id, medicine_id) values
 (1, 1, 2), (2, 1, 3);
 
-insert into pharmacy_meds (id, quantity, pharmacy_id, medicine_id) values
-(1, 100, 1, 1), (2, 200, 1, 2), (3, 3000, 1, 3), (4, 400, 1, 4),
-(5, 150, 2, 2), (6, 100, 2, 3), (7, 100, 3, 5), (8, 100, 3, 6);
+insert into pharmacy_meds (id, quantity, pharmacy_id, medicine_id, points) values
+(1, 100, 1, 1, 4), (2, 200, 1, 2, 5), (3, 3000, 1, 3, 7), (4, 400, 1, 4, 6),
+(5, 150, 2, 2, 2), (6, 100, 2, 3, 6), (7, 100, 3, 5, 5), (8, 100, 3, 6, 4);
 
 insert into medicine_reservation (id, pick_date, pharmacy_meds_id, patient_id, medicament_reservation_status) values
 (1, '2022-01-20', 7,1, 1),
 (2, '2020-02-01', 6,1, 0);
 
-insert into action(id, active, pharmacy_id, about) values
+insert into actionn(id, active, pharmacy_id, about) values
 (1, true, 1, 'Prva promocija'),
 (2, true, 1, 'Druga promocija'),
 (3, true, 2, 'Treca promocija'),
@@ -59,8 +59,9 @@ insert into action(id, active, pharmacy_id, about) values
 insert into subscribed_patients(pharmacy_id, patient_id) values
 (1, 1), (2, 1), (3, 1);
 
-insert into order(id, dead_line, pharmacy_id) values
-(1, '2022-01-20', 1), (2, '2022-01-20', 2);
+insert into orderr (id, dead_line, pharmacy_id) values
+(1, '2022-01-20', 1),
+(2, '2022-01-20', 2);
 
 insert into medicine_order(id, quantity, medicine_id, order_id) values
 (1, 1000, 1, 1), (2, 200, 2, 1), (3, 400, 3, 1),
@@ -68,3 +69,14 @@ insert into medicine_order(id, quantity, medicine_id, order_id) values
 
 insert into medicine_supplier(id, quantity, medicine_id, supplier_id) values
 (1, 1000, 1, 1),(2, 1000, 2, 1),(3, 1000, 3, 1),(4, 1000, 4, 1),(5, 1000, 5, 1);
+
+insert into complaint(id, text, answered, pharmacy_id, dermatologist_id, pharmacist_id, medicament_id, patient_id) values
+(1, 'Zalba dermatologu', true, 1, 1, null, null, 1),
+(2, 'Zalba farmaceutu', false, 3, null, 1, null, 1),
+(3, 'Zalba apoteci', true, 1, null, null, null, 1);
+
+insert into loyalty_program(id, loyalty_type, patient_id)values
+(1, 0, 1);
+
+insert into loyalty_point(id, loyalty_program_id, medicine_reservation_id) values
+(1, 1, 1), (2, 1, 2);

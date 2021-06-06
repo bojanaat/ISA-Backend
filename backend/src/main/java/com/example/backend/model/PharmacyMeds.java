@@ -20,6 +20,8 @@ public class PharmacyMeds {
 
     private int quantity;
 
+    private int points;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pharmacy_id")
     private Pharmacy pharmacy;

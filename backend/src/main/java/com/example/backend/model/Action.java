@@ -4,7 +4,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
+@Entity(name="actionn")
 @Getter
 @Setter
 @Data

@@ -5,6 +5,7 @@ import com.example.backend.dto.request.CancelMedReservationRequest;
 import com.example.backend.dto.request.CreateMedRequest;
 import com.example.backend.dto.request.ReserveMedicamentRequest;
 import com.example.backend.dto.response.MedReservationResponse;
+import com.example.backend.dto.response.MedicineOrderResponse;
 import com.example.backend.dto.response.MedicineResponse;
 import com.example.backend.dto.response.PharmacyMedsResponse;
 
@@ -28,4 +29,6 @@ public interface IMedicineService {
     boolean cancelMedReservation(CancelMedReservationRequest request);
 
     List<MedReservationResponse> getReservedDroppedMedicines(Long id);
+
+    List<MedicineOrderResponse> getAllMedicinesByOrderId(Long id);
 }

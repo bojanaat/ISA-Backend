@@ -31,6 +31,10 @@ public class MedicineReservation {
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
+    @OneToOne(mappedBy = "medicineReservation", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private LoyaltyPoint loyaltyPoint;
+
+
     @Column(name = "medicament_reservation_status")
     private MedicamentReservationStatus medicamentReservationStatus;
 

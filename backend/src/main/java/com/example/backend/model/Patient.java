@@ -37,6 +37,12 @@ public class Patient {
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rating> ratings;
 
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Complaint> complaints;
+
+    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private LoyaltyProgram loyaltyProgram;
+
     @ManyToMany(mappedBy = "patients")
     private Collection<Pharmacy> pharmacies;
 

@@ -5,6 +5,7 @@ import com.example.backend.dto.request.CancelMedReservationRequest;
 import com.example.backend.dto.request.CreateMedRequest;
 import com.example.backend.dto.request.ReserveMedicamentRequest;
 import com.example.backend.dto.response.MedReservationResponse;
+import com.example.backend.dto.response.MedicineOrderResponse;
 import com.example.backend.dto.response.MedicineResponse;
 import com.example.backend.dto.response.PharmacyMedsResponse;
 import com.example.backend.model.*;
@@ -31,8 +32,10 @@ public class MedicineService implements IMedicineService {
     private final PharmacyService _pharmacyService;
     private final IMedicineReservationRepository _iMedicineReservationRepository;
     private final IEmailService _iEmailService;
+    private final IMedicineOrderRepository _iMedicineOrderRepository;
+    private final OrderService _iOrderService;
 
-    public MedicineService(IMedicineRepository iMedicineRepository, IPatientRepository iPatientRepository, IAllergiesRepository iAllergiesRepository, IPharmacyMedsRepository iPharmacyMedsRepository, IPharmacyRepository iPharmacyRepository, PharmacyService pharmacyService, IMedicineReservationRepository iMedicineReservationRepository, IEmailService iEmailService) {
+    public MedicineService(IMedicineRepository iMedicineRepository, IPatientRepository iPatientRepository, IAllergiesRepository iAllergiesRepository, IPharmacyMedsRepository iPharmacyMedsRepository, IPharmacyRepository iPharmacyRepository, PharmacyService pharmacyService, IMedicineReservationRepository iMedicineReservationRepository, IEmailService iEmailService, IMedicineOrderRepository iMedicineOrderRepository, OrderService iOrderService) {
         _iMedicineRepository = iMedicineRepository;
         _iPatientRepository = iPatientRepository;
         _iAllergiesRepository = iAllergiesRepository;
@@ -41,6 +44,8 @@ public class MedicineService implements IMedicineService {
         _pharmacyService = pharmacyService;
         _iMedicineReservationRepository = iMedicineReservationRepository;
         _iEmailService = iEmailService;
+        _iMedicineOrderRepository = iMedicineOrderRepository;
+        _iOrderService = iOrderService;
     }
 
     @Override
@@ -224,7 +229,28 @@ public class MedicineService implements IMedicineService {
         return finalList;
     }
 
-    private MedReservationResponse mapMedReservationToResponse(MedicineReservation mr) {
+    @Override
+    public List<MedicineOrderResponse> getAllMedicinesByOrderId(Long id) {
+        List<MedicineOrder> medicineOrders = _iMedicineOrderRepository.findAll();
+        List<MedicineOrderResponse> orderMedicamentResponses = new ArrayList<>();
+        for (MedicineOrder medicineOrder: medicineOrders) {
+            if(medicineOrder.getOrder().getId().equals(id)){
+                orderMedicamentResponses.add(mapMedOrderToResponse(medicineOrder));
+            }
+        }
+        return orderMedicamentResponses;
+    }
+
+    private MedicineOrderResponse mapMedOrderToResponse(MedicineOrder medicineOrder) {
+        MedicineOrderResponse medicineOrderResponse = new MedicineOrderResponse();
+        medicineOrderResponse.setOrderResponse(_iOrderService.mapToResponse(medicineOrder.getOrder()));
+        medicineOrderResponse.setMedicineResponse(mapToResponse(medicineOrder.getMedicine()));
+        medicineOrderResponse.setQuantity(medicineOrder.getQuantity());
+        medicineOrderResponse.setId(medicineOrder.getId());
+        return medicineOrderResponse;
+    }
+
+    public MedReservationResponse mapMedReservationToResponse(MedicineReservation mr) {
         MedReservationResponse medReservationResponse = new MedReservationResponse();
         medReservationResponse.setPharmacyMedsResponse(mapPharmacyMedsToResponse(mr.getPharmacyMeds()));
         medReservationResponse.setMedicamentReservationStatus(mr.getMedicamentReservationStatus().toString());
@@ -234,7 +260,7 @@ public class MedicineService implements IMedicineService {
         return medReservationResponse;
     }
 
-    private PharmacyMedsResponse mapPharmacyMedsToResponse(PharmacyMeds pm) {
+    public PharmacyMedsResponse mapPharmacyMedsToResponse(PharmacyMeds pm) {
         PharmacyMedsResponse pharmacyMedsResponse = new PharmacyMedsResponse();
         pharmacyMedsResponse.setPharmacyResponse(_pharmacyService.mapToResponse(pm.getPharmacy()));
         pharmacyMedsResponse.setMedicineResponse(mapToResponse(pm.getMedicine()));
@@ -243,7 +269,7 @@ public class MedicineService implements IMedicineService {
         return pharmacyMedsResponse;
     }
 
-    private MedicineResponse mapToResponse(Medicine savedMedicine) {
+    public MedicineResponse mapToResponse(Medicine savedMedicine) {
 
         MedicineResponse medicineResponse = new MedicineResponse();
         medicineResponse.setMedicineType(savedMedicine.getMedicineType());

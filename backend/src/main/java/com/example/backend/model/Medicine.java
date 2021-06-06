@@ -59,4 +59,7 @@ public class Medicine  {
 
     @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rating> ratings;
+
+    @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Complaint> complaints;
 }

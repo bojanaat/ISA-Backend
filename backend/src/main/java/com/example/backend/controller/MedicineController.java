@@ -87,6 +87,17 @@ public class MedicineController {
         }
     }
 
+    @GetMapping("/{id}/order")
+    public ResponseEntity<?> getAllMedicinesByOrderId(@PathVariable("id") Long id){
+        List<MedicineOrderResponse> responses = _iMedicineService.getAllMedicinesByOrderId(id);
+        if(responses != null) {
+            return new ResponseEntity<>(responses, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>("Medicaments doesn't exist.", HttpStatus.NOT_FOUND);
+        }
+    }
+
     //rezervacija leka
     @PutMapping("/{id}/pharmacy-medicament")
     public PharmacyMedsResponse reserveMedicament(@RequestBody ReserveMedicamentRequest request, @PathVariable Long id) {

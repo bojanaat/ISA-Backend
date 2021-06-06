@@ -172,7 +172,7 @@ public class PatientService implements IPatientService {
         throw new Exception("Your account has been deleted.");
     }
 
-    private PatientResponse mapToResponse(Patient savedPatient) {
+    public PatientResponse mapToResponse(Patient savedPatient) {
         System.out.println("Usao sam u maper");
 
         PatientResponse patientResponse = new PatientResponse();
