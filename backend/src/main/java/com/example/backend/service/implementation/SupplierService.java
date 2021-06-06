@@ -68,7 +68,7 @@ public class SupplierService implements ISupplierService {
         return mapToResponse(savedSupplier);
     }
 
-    private SupplierResponse mapToResponse(Supplier savedSupplier) {
+    public SupplierResponse mapToResponse(Supplier savedSupplier) {
         SupplierResponse supplierResponse = new SupplierResponse();
         User user = savedSupplier.getUser();
         supplierResponse.setEmail(user.getEmail());

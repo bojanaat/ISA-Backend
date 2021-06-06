@@ -58,3 +58,13 @@ insert into action(id, active, pharmacy_id, about) values
 
 insert into subscribed_patients(pharmacy_id, patient_id) values
 (1, 1), (2, 1), (3, 1);
+
+insert into order(id, dead_line, pharmacy_id) values
+(1, '2022-01-20', 1), (2, '2022-01-20', 2);
+
+insert into medicine_order(id, quantity, medicine_id, order_id) values
+(1, 1000, 1, 1), (2, 200, 2, 1), (3, 400, 3, 1),
+(4, 500, 1, 2), (5, 200, 4, 2);
+
+insert into medicine_supplier(id, quantity, medicine_id, supplier_id) values
+(1, 1000, 1, 1),(2, 1000, 2, 1),(3, 1000, 3, 1),(4, 1000, 4, 1),(5, 1000, 5, 1);

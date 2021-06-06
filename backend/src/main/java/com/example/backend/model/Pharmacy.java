@@ -50,6 +50,9 @@ public class Pharmacy {
     private List<PharmacyMeds> pharmacyMeds;
 
     @OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders;
+
+    @OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rating> ratings;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
