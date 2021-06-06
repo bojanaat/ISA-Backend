@@ -88,7 +88,7 @@ public class ExaminationDermatologistService implements IExaminationDermatologis
         List<ExaminationDermatologistResponse> finalEx = new ArrayList<>();
         List<ExaminationDermatologist> patientExaminations = _examinationDermatologistRepository.findAllByPatient_Id(id);
         for(ExaminationDermatologist examination: patientExaminations){
-            if(examination.getExaminationStatus().equals(ExaminationStatus.AVAILABLE)){
+            if(examination.getExaminationStatus().equals(ExaminationStatus.RESERVED)){
                 finalEx.add(mapExaminationToResponse(examination));
             }
         }

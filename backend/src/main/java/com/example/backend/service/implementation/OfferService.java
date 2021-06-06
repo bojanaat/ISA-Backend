@@ -1,7 +1,9 @@
 package com.example.backend.service.implementation;
 
+import com.example.backend.controller.OfferController;
 import com.example.backend.dto.request.CreateOfferRequest;
 import com.example.backend.dto.response.OfferResponse;
+import com.example.backend.dto.response.OrderResponse;
 import com.example.backend.model.*;
 import com.example.backend.repository.IOfferRepository;
 import com.example.backend.repository.IOrderRepository;
@@ -10,6 +12,7 @@ import com.example.backend.service.IOfferService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -64,6 +67,18 @@ public class OfferService implements IOfferService {
         Offer savedOffer = _iOfferRepository.save(offer);
 
         return mapToResponse(savedOffer);
+    }
+
+    @Override
+    public List<OfferResponse> getAllOffersBySupplierId(Long id) {
+        List<Offer> offers = _iOfferRepository.findAll();
+        List<OfferResponse> finalOrders = new ArrayList<>();
+        for(Offer o: offers){
+            if(o.getSupplier().getId().equals(id)){
+                finalOrders.add(mapToResponse(o));
+            }
+        }
+        return finalOrders;
     }
 
     private OfferResponse mapToResponse(Offer savedOffer) {

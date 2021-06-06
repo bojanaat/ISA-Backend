@@ -4,11 +4,9 @@ import com.example.backend.dto.request.PharmacistRequest;
 import com.example.backend.dto.request.UserRequest;
 import com.example.backend.dto.response.DermatologistResponse;
 import com.example.backend.dto.response.PharmacistResponse;
+import com.example.backend.dto.response.PharmacyMedsResponse;
 import com.example.backend.dto.response.UserResponse;
-import com.example.backend.model.Dermatologist;
-import com.example.backend.model.Pharmacist;
-import com.example.backend.model.Pharmacy;
-import com.example.backend.model.User;
+import com.example.backend.model.*;
 import com.example.backend.repository.IPharmacistRepository;
 import com.example.backend.repository.IPharmacyRepository;
 import com.example.backend.repository.IUserRepository;
@@ -16,6 +14,9 @@ import com.example.backend.service.IPharmacistService;
 import com.example.backend.service.IUserService;
 import com.example.backend.utils.UserType;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PharmacistService implements IPharmacistService {
@@ -66,6 +67,23 @@ public class PharmacistService implements IPharmacistService {
 
         return mapToResponse(savedPharmacist);
     }
+
+    @Override
+    public List<PharmacistResponse> getPharmacists(Long id) {
+        //apoteka koja nas zanima
+        Pharmacy pharmacy = _iPharmacyRepository.findOneById(id);
+        //svi farmaceuti
+        List<Pharmacist> pharmacists = _iPharmacistRepository.findAll();
+
+
+        List<PharmacistResponse> finalResponse = new ArrayList<>();
+        //prolazim kroz sve farmaceute ikada i uporedjujem da li pripadaju mojoj apoteci
+        for(Pharmacist p: pharmacists){
+            if(p.getPharmacy().getId().equals(id)){
+                finalResponse.add(mapToResponse(p));
+            }
+        }
+        return finalResponse;    }
 
     public PharmacistResponse mapToResponse(Pharmacist savedPharmacist) {
 
