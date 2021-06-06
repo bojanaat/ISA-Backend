@@ -1,10 +1,10 @@
 package com.example.backend.service.implementation;
 
 import com.example.backend.dto.request.PharmacyRequest;
-import com.example.backend.dto.response.MedicineResponse;
 import com.example.backend.dto.response.PharmacyResponse;
-import com.example.backend.model.Medicine;
+import com.example.backend.model.Patient;
 import com.example.backend.model.Pharmacy;
+import com.example.backend.repository.IPatientRepository;
 import com.example.backend.repository.IPharmacyRepository;
 import com.example.backend.service.IPharmacyService;
 import org.springframework.stereotype.Service;
@@ -17,9 +17,11 @@ import java.util.Set;
 public class PharmacyService implements IPharmacyService {
 
     private final IPharmacyRepository _iPharmacyRepository;
+    private final IPatientRepository _iPatientRepository;
 
-    public PharmacyService(IPharmacyRepository iPharmacyRepository) {
+    public PharmacyService(IPharmacyRepository iPharmacyRepository, IPatientRepository iPatientRepository) {
         _iPharmacyRepository = iPharmacyRepository;
+        _iPatientRepository = iPatientRepository;
     }
 
     @Override
@@ -59,6 +61,19 @@ public class PharmacyService implements IPharmacyService {
             pharmacyResponses.add(pharmacyResponse);
         }
         return pharmacyResponses;
+    }
+
+    @Override
+    public List<PharmacyResponse> getSubscribedPharmacies(Long id) {
+        Patient patient = _iPatientRepository.findOneById(id);
+        List<Pharmacy> pharmacies = _iPharmacyRepository.findAll();
+        List<PharmacyResponse> finalList = new ArrayList<>();
+        for(Pharmacy p: pharmacies){
+            if(p.getPatients().contains(patient)){
+                finalList.add(mapToResponse(p));
+            }
+        }
+        return finalList;
     }
 
     public PharmacyResponse mapToResponse(Pharmacy pharmacy) {

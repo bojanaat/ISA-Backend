@@ -47,3 +47,14 @@ insert into pharmacy_meds (id, quantity, pharmacy_id, medicine_id) values
 insert into medicine_reservation (id, pick_date, pharmacy_meds_id, patient_id, medicament_reservation_status) values
 (1, '2022-01-20', 7,1, 1),
 (2, '2020-02-01', 6,1, 0);
+
+insert into action(id, active, pharmacy_id, about) values
+(1, true, 1, 'Prva promocija'),
+(2, true, 1, 'Druga promocija'),
+(3, true, 2, 'Treca promocija'),
+(4, true, 2, 'Cetvrta promocija'),
+(5, true, 3, 'Peta promocija'),
+(6, true, 3, 'Sesta promocija');
+
+insert into subscribed_patients(pharmacy_id, patient_id) values
+(1, 1), (2, 1), (3, 1);

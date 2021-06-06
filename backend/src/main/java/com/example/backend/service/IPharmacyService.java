@@ -10,4 +10,6 @@ public interface IPharmacyService {
     PharmacyResponse createPharmacy(PharmacyRequest request) throws Exception;
 
     List<PharmacyResponse> getAllPharmacies();
+
+    List<PharmacyResponse> getSubscribedPharmacies(Long id);
 }

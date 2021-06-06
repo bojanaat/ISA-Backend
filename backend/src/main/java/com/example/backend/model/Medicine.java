@@ -39,6 +39,7 @@ public class Medicine  {
 
     private boolean recipe;
 
+
     private String replacementCode;
 
     private String notes;
@@ -48,4 +49,7 @@ public class Medicine  {
 
     @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PharmacyMeds> pharmacyMeds;
+
+    @OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rating> ratings;
 }

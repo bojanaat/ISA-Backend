@@ -1,32 +1,31 @@
 package com.example.backend.model;
-
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDate;
 
-@Data
+@Entity
 @Getter
 @Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Pharmacist {
+public class Action {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private boolean active;
+
+    //@Column(name = "expire_date")
+    //private LocalDate expireDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pharmacy_id")
     private Pharmacy pharmacy;
 
-    @OneToMany(mappedBy = "pharmacist", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Rating> ratings;
+    private String about;
 
 }
